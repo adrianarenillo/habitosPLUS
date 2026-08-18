@@ -10,14 +10,8 @@ class QuoteRepositoryImpl(
 
     override suspend fun getRandomQuote(): Result<Quote> {
         return try {
-            val respuesta = api.getRandomQuote()
-            val dto = respuesta.firstOrNull()
-
-            if (dto != null) {
-                Result.success(Quote(texto = dto.q, autor = dto.a))
-            } else {
-                Result.failure(Exception("La API no devolvió ninguna frase"))
-            }
+            val dto = api.getRandomQuote()
+            Result.success(Quote(texto = dto.phrase, autor = dto.author))
         } catch (e: Exception) {
             Result.failure(e)
         }

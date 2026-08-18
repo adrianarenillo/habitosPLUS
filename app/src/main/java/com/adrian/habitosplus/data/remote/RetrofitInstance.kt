@@ -17,7 +17,7 @@ object RetrofitInstance {
 
     val api: ZenQuotesApi by lazy {
         Retrofit.Builder()
-            .baseUrl("https://zenquotes.io/")
+            .baseUrl("https://frasedeldia.azurewebsites.net/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

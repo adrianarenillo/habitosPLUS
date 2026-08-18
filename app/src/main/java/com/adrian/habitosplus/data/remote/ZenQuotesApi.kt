@@ -4,6 +4,6 @@ import com.adrian.habitosplus.data.remote.dto.QuoteDto
 import retrofit2.http.GET
 
 interface ZenQuotesApi {
-    @GET("api/random")
-    suspend fun getRandomQuote(): List<QuoteDto>
+    @GET("api/phrase")
+    suspend fun getRandomQuote(): QuoteDto
 }
