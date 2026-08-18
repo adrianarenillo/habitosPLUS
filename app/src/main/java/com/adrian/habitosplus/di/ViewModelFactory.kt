@@ -2,6 +2,7 @@ package com.adrian.habitosplus.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.adrian.habitosplus.ui.screens.agregarhabito.AgregarHabitoViewModel
 import com.adrian.habitosplus.ui.screens.ajustes.AjustesViewModel
 import com.adrian.habitosplus.ui.screens.detallehabito.DetalleHabitoViewModel
 import com.adrian.habitosplus.ui.screens.listahabitos.ListaHabitosViewModel
@@ -25,6 +26,11 @@ class ViewModelFactory(private val appContainer: AppContainer) : ViewModelProvid
             modelClass.isAssignableFrom(AjustesViewModel::class.java) -> {
                 AjustesViewModel(
                     appContainer.settingsDataStore
+                ) as T
+            }
+            modelClass.isAssignableFrom(AgregarHabitoViewModel::class.java) -> {
+                AgregarHabitoViewModel(
+                    appContainer.habitoRepository
                 ) as T
             }
             else -> throw IllegalArgumentException("ViewModel desconocido: ${modelClass.name}")

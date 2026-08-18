@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.adrian.habitosplus.di.AppContainer
 import com.adrian.habitosplus.di.ViewModelFactory
+import com.adrian.habitosplus.ui.screens.agregarhabito.AgregarHabitoScreen
+import com.adrian.habitosplus.ui.screens.agregarhabito.AgregarHabitoViewModel
 import com.adrian.habitosplus.ui.screens.ajustes.AjustesScreen
 import com.adrian.habitosplus.ui.screens.ajustes.AjustesViewModel
 import com.adrian.habitosplus.ui.screens.detallehabito.DetalleHabitoScreen
@@ -35,6 +37,9 @@ fun NavGraph(
                 },
                 onAjustesClick = {
                     navController.navigate(Screen.Ajustes.route)
+                },
+                onAgregarClick = {
+                    navController.navigate(Screen.AgregarHabito.route)
                 }
             )
         }
@@ -54,6 +59,15 @@ fun NavGraph(
             AjustesScreen(
                 viewModel = viewModel,
                 onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(Screen.AgregarHabito.route) {
+            val viewModel: AgregarHabitoViewModel = viewModel(factory = factory)
+            AgregarHabitoScreen(
+                viewModel = viewModel,
+                onBackClick = { navController.popBackStack() },
+                onHabitoGuardado = { navController.popBackStack() }
             )
         }
     }
