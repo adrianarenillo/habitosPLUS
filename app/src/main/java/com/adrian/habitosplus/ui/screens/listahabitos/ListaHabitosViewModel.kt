@@ -52,9 +52,9 @@ class ListaHabitosViewModel(
         }
     }
 
-    fun marcarCumplidoHoy(idHabito: Int) {
+    fun marcarCumplidoHoy(idHabito: Int, fotoUri: String? = null) {
         viewModelScope.launch {
-            habitoRepository.marcarCumplidoHoy(idHabito, fotoUri = null)
+            habitoRepository.marcarCumplidoHoy(idHabito, fotoUri)
         }
     }
 }

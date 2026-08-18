@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RegistroCumplimientoDao {
 
+    @Query("SELECT * FROM registros_cumplimiento")
+    fun getAllRegistros(): Flow<List<RegistroCumplimientoEntity>>
+
     @Query("SELECT * FROM registros_cumplimiento WHERE idHabito = :idHabito ORDER BY fecha DESC")
     fun getRegistrosByHabito(idHabito: Int): Flow<List<RegistroCumplimientoEntity>>
 
