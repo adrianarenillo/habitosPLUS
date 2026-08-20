@@ -22,6 +22,28 @@ class AgregarHabitoViewModel(
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error.asStateFlow()
 
+    private val _imagenFondoUri = MutableStateFlow<String?>(null)
+    val imagenFondoUri: StateFlow<String?> = _imagenFondoUri.asStateFlow()
+
+    private var habitoEditando: Habito? = null
+
+    val esEdicion: Boolean
+        get() = habitoEditando != null
+
+    fun cargarHabitoParaEditar(habitoId: Int) {
+        viewModelScope.launch {
+            val habito = habitoRepository.getHabitoById(habitoId) ?: return@launch
+            habitoEditando = habito
+            _nombre.value = habito.nombre
+            _descripcion.value = habito.descripcion ?: ""
+            _imagenFondoUri.value = habito.imagenFondoUri
+        }
+    }
+
+    fun onImagenFondoSeleccionada(uri: String?) {
+        _imagenFondoUri.value = uri
+    }
+
     fun onNombreChange(value: String) {
         _nombre.value = value
         _error.value = null
@@ -40,14 +62,26 @@ class AgregarHabitoViewModel(
         }
 
         viewModelScope.launch {
-            habitoRepository.insertHabito(
-                Habito(
-                    nombre = nombreActual,
-                    descripcion = _descripcion.value.trim().ifEmpty { null },
-                    colorTag = 0,
-                    fechaCreacion = System.currentTimeMillis()
+            val original = habitoEditando
+            if (original != null) {
+                habitoRepository.updateHabito(
+                    original.copy(
+                        nombre = nombreActual,
+                        descripcion = _descripcion.value.trim().ifEmpty { null },
+                        imagenFondoUri = _imagenFondoUri.value
+                    )
                 )
-            )
+            } else {
+                habitoRepository.insertHabito(
+                    Habito(
+                        nombre = nombreActual,
+                        descripcion = _descripcion.value.trim().ifEmpty { null },
+                        colorTag = 0,
+                        fechaCreacion = System.currentTimeMillis(),
+                        imagenFondoUri = _imagenFondoUri.value
+                    )
+                )
+            }
             onGuardado()
         }
     }

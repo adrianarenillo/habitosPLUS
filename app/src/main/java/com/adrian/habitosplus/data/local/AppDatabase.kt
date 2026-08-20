@@ -9,7 +9,7 @@ import com.adrian.habitosplus.data.local.entities.RegistroCumplimientoEntity
 
 @Database(
     entities = [HabitoEntity::class, RegistroCumplimientoEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -27,7 +27,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "habitosplus_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration(dropAllTables = true)
+                    .build()
                 INSTANCE = instance
                 instance
             }

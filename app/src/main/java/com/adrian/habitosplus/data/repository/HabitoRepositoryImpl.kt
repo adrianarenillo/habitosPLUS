@@ -66,6 +66,10 @@ class HabitoRepositoryImpl(
         )
     }
 
+    override suspend fun updateRegistro(registro: RegistroCumplimiento) {
+        registroDao.updateRegistro(registro.toEntity())
+    }
+
     override suspend fun deleteRegistro(registro: RegistroCumplimiento) {
         registroDao.deleteRegistro(registro.toEntity())
     }
@@ -118,7 +122,8 @@ private fun HabitoEntity.toDomain(racha: Int = 0): Habito {
         descripcion = descripcion,
         colorTag = colorTag,
         fechaCreacion = fechaCreacion,
-        rachaActual = racha
+        rachaActual = racha,
+        imagenFondoUri = imagenFondoUri
     )
 }
 
@@ -128,7 +133,8 @@ private fun Habito.toEntity(): HabitoEntity {
         nombre = nombre,
         descripcion = descripcion,
         colorTag = colorTag,
-        fechaCreacion = fechaCreacion
+        fechaCreacion = fechaCreacion,
+        imagenFondoUri = imagenFondoUri
     )
 }
 

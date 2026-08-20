@@ -16,6 +16,9 @@ interface RegistroCumplimientoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRegistro(registro: RegistroCumplimientoEntity)
 
+    @Update
+    suspend fun updateRegistro(registro: RegistroCumplimientoEntity)
+
     @Delete
     suspend fun deleteRegistro(registro: RegistroCumplimientoEntity)
 }

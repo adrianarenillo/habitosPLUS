@@ -10,5 +10,6 @@ data class HabitoEntity(
     val nombre: String,
     val descripcion: String?,
     val colorTag: Int,
-    val fechaCreacion: Long
+    val fechaCreacion: Long,
+    val imagenFondoUri: String? = null
 )

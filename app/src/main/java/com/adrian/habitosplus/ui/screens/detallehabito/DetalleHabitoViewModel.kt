@@ -37,4 +37,16 @@ class DetalleHabitoViewModel(
             }
         }
     }
+
+    fun eliminarRegistro(registro: RegistroCumplimiento) {
+        viewModelScope.launch {
+            habitoRepository.deleteRegistro(registro)
+        }
+    }
+
+    fun actualizarFotoRegistro(registro: RegistroCumplimiento, nuevaFotoUri: String) {
+        viewModelScope.launch {
+            habitoRepository.updateRegistro(registro.copy(fotoUri = nuevaFotoUri))
+        }
+    }
 }

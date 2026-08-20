@@ -5,21 +5,28 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.adrian.habitosplus.R
 import com.adrian.habitosplus.domain.model.Habito
 import com.adrian.habitosplus.util.crearArchivoFoto
 import kotlinx.coroutines.launch
+import androidx.compose.material.icons.filled.TaskAlt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,7 +100,7 @@ fun ListaHabitosScreen(
                 title = { Text("Mis Hábitos") },
                 actions = {
                     IconButton(onClick = onAjustesClick) {
-                        Icon(Icons.Default.CheckCircle, contentDescription = "Ajustes")
+                        Icon(Icons.Default.Settings, contentDescription = "Ajustes")
                     }
                 }
             )
@@ -104,27 +111,40 @@ fun ListaHabitosScreen(
             }
         }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding).fillMaxSize()) {
+        Box(modifier = Modifier.padding(padding).fillMaxSize()) {
+            Image(
+                painter = painterResource(R.drawable.fondo_lista_habitos),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
 
-            FraseDelDiaCard(quoteState)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.55f))
+            ) {
 
-            if (habitos.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Aún no tienes hábitos. ¡Agrega uno!")
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)
-                ) {
-                    items(habitos) { habito ->
-                        HabitoItem(
-                            habito = habito,
-                            onClick = { onHabitoClick(habito.id) },
-                            onMarcarCumplido = { marcarConFoto(habito.id) }
-                        )
+                FraseDelDiaCard(quoteState)
+
+                if (habitos.isEmpty()) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("Aún no tienes hábitos. ¡Agrega uno!")
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)
+                    ) {
+                        items(habitos) { habito ->
+                            HabitoItem(
+                                habito = habito,
+                                onClick = { onHabitoClick(habito.id) },
+                                onMarcarCumplido = { marcarConFoto(habito.id) }
+                            )
+                        }
                     }
                 }
             }
@@ -171,7 +191,7 @@ fun HabitoItem(
                 Text("Racha: ${habito.rachaActual} días", style = MaterialTheme.typography.bodySmall)
             }
             IconButton(onClick = onMarcarCumplido) {
-                Icon(Icons.Default.CheckCircle, contentDescription = "Marcar cumplido")
+                Icon(Icons.Default.TaskAlt, contentDescription = "Marcar cumplido")
             }
         }
     }

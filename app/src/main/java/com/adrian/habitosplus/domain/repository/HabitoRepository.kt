@@ -20,5 +20,7 @@ interface HabitoRepository {
 
     suspend fun marcarCumplidoHoy(idHabito: Int, fotoUri: String?)
 
+    suspend fun updateRegistro(registro: RegistroCumplimiento)
+
     suspend fun deleteRegistro(registro: RegistroCumplimiento)
 }

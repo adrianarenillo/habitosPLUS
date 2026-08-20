@@ -6,5 +6,6 @@ data class Habito(
     val descripcion: String?,
     val colorTag: Int,
     val fechaCreacion: Long,
-    val rachaActual: Int = 0
+    val rachaActual: Int = 0,
+    val imagenFondoUri: String? = null
 )

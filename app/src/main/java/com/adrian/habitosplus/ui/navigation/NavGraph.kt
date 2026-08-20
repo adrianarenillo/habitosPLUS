@@ -3,9 +3,11 @@ package com.adrian.habitosplus.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.adrian.habitosplus.di.AppContainer
 import com.adrian.habitosplus.di.ViewModelFactory
 import com.adrian.habitosplus.ui.screens.agregarhabito.AgregarHabitoScreen
@@ -50,7 +52,10 @@ fun NavGraph(
             DetalleHabitoScreen(
                 habitoId = habitoId,
                 viewModel = viewModel,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onEditarClick = {
+                    navController.navigate(Screen.AgregarHabito.createRoute(habitoId))
+                }
             )
         }
 
@@ -62,10 +67,20 @@ fun NavGraph(
             )
         }
 
-        composable(Screen.AgregarHabito.route) {
+        composable(
+            Screen.AgregarHabito.route,
+            arguments = listOf(
+                navArgument("habitoId") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
+            )
+        ) { backStackEntry ->
+            val habitoId = backStackEntry.arguments?.getInt("habitoId") ?: -1
             val viewModel: AgregarHabitoViewModel = viewModel(factory = factory)
             AgregarHabitoScreen(
                 viewModel = viewModel,
+                habitoId = habitoId.takeIf { it != -1 },
                 onBackClick = { navController.popBackStack() },
                 onHabitoGuardado = { navController.popBackStack() }
             )
