@@ -204,14 +204,6 @@ Desde Android Studio: **Build → Generate Signed App Bundle or APK...**, selecc
 - El `.aab` es el formato de entrega para la Play Store (no publicado, según lo permitido por el silabo).
 - El `.apk` se generó adicionalmente para instalación directa en dispositivo físico, con fines de prueba.
 
----
-
-## Capturas de pantalla
-
-*(Agregar aquí las capturas de: lista de hábitos, detalle con historial y foto, formulario de agregar/editar, y ajustes con modo oscuro activado)*
-
----
-
 ## Autor
 
 **Adrian Arenillo**
